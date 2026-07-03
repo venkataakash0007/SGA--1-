@@ -1,0 +1,38 @@
+Question 1 - Environment Verification
+
+Commands executed:
+1. whoami
+Output:
+codespace
+Observation:
+This command confirmed the logged-in user account name for the current shell session.
+
+2. groups
+Output:
+codespace pipx python oryx golang docker sdkman rvm php conda nvs nvm hugo ssh
+Observation:
+This showed the groups associated with the account and confirmed the user has access to several development and container-related groups.
+
+3. echo "$SHELL"
+Output:
+/bin/bash
+Observation:
+The active login shell is Bash, which is the default shell in this environment.
+
+4. pwd
+Output:
+/workspaces/SGA--1-
+Observation:
+The current working directory is the project workspace root where the lab files are being created.
+
+5. ls -la
+Output:
+A directory listing of the workspace showed the Q1 to Q5 folders, the Git repository metadata, and the README file.
+Observation:
+This confirmed the workspace structure and the available files for the assignment.
+
+6. curl -s --max-time 10 https://youtube.com > /dev/null && echo "Network: youtube.com reachable"
+Output:
+Network: youtube.com reachable
+Observation:
+Outbound connectivity to the internet was verified successfully from the Linux environment.

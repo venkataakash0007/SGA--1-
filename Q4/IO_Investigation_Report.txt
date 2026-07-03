@@ -1,0 +1,42 @@
+Question 4 - File Access and I/O Investigation
+
+Commands executed:
+1. echo "sample log line" > app.log
+2. lsof | head -n 20
+Output:
+The command displayed a sample of open files and descriptors currently used by the system processes.
+Observation:
+This helped identify that Linux exposes file access information through the process table and open file descriptors.
+
+3. exec 3<app.log
+4. lsof -p $$ | grep app.log
+5. ls -l /proc/$$/fd | grep app.log
+Output:
+The shell opened file descriptor 3 for app.log, and the process file descriptor listing confirmed the association.
+Observation:
+This shows that Linux uses numeric file descriptors to represent open files for a process.
+
+6. ls -l /proc/$$/fd
+Output:
+The shell had standard input, output, error, and descriptor 3 associated with app.log.
+Observation:
+The descriptor listing shows how stdin, stdout, stderr, and additional file handles are managed by the shell.
+
+7. ls -l > stdout.txt
+8. ls /not_a_real_path 2> stderr.txt
+9. (ls -l && ls /not_a_real_path) > combined.txt 2>&1
+Output:
+stdout.txt captured the normal listing output.
+stderr.txt captured the error message for the missing path.
+combined.txt contained both output streams combined into a single file.
+Observation:
+Redirection allows Linux programs to separate or merge standard output and standard error as required.
+
+10. ulimit -a
+Output:
+The shell reported the current resource limits for the session.
+Observation:
+Resource limits control how much of certain system resources a process may consume, including file sizes and process-related constraints.
+
+Conclusion:
+Linux manages file I/O through file descriptors and stream redirection, which make it possible to control where output and errors are sent.

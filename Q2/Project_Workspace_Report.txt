@@ -1,0 +1,51 @@
+Question 2 - Secure Project Workspace Setup
+
+Commands executed:
+1. mkdir -p secure_workspace/{docs,src,logs}
+2. touch secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+3. find secure_workspace -maxdepth 2 -type f -o -type d | sort
+Output:
+secure_workspace
+secure_workspace/docs
+secure_workspace/docs/plan.txt
+secure_workspace/logs
+secure_workspace/logs/activity.log
+secure_workspace/src
+secure_workspace/src/app.txt
+Observation:
+The project workspace structure was created with dedicated directories for documentation, source files, and logs.
+
+4. stat -c '%n %a %U:%G' secure_workspace secure_workspace/docs secure_workspace/src secure_workspace/logs secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+Output before modification:
+secure_workspace 777 codespace:codespace
+secure_workspace/docs 777 codespace:codespace
+secure_workspace/src 777 codespace:codespace
+secure_workspace/logs 777 codespace:codespace
+secure_workspace/docs/plan.txt 666 codespace:codespace
+secure_workspace/src/app.txt 666 codespace:codespace
+secure_workspace/logs/activity.log 666 codespace:codespace
+Observation:
+The initial permissions were very open, which could expose project files to unintended access.
+
+5. chmod 750 secure_workspace
+6. chmod 750 secure_workspace/docs secure_workspace/src secure_workspace/logs
+7. chmod 640 secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+Output after modification:
+secure_workspace 750 codespace:codespace
+secure_workspace/docs 750 codespace:codespace
+secure_workspace/src 750 codespace:codespace
+secure_workspace/logs 750 codespace:codespace
+secure_workspace/docs/plan.txt 640 codespace:codespace
+secure_workspace/src/app.txt 640 codespace:codespace
+secure_workspace/logs/activity.log 640 codespace:codespace
+Observation:
+The permissions were tightened so that the owner has full access while group and others have limited or no access.
+
+8. umask
+Output:
+0022
+Observation:
+The default umask value is 0022, which removes write permission for group and others on newly created files and directories.
+
+Explanation of protection:
+Restricting permissions helps secure project data by preventing unauthorized users from reading or modifying files, especially in shared systems. The directory mode 750 and file mode 640 provide a safer baseline for project storage.

@@ -1,0 +1,37 @@
+Question 5 - Storage Health Assessment and Documentation
+
+Commands executed:
+1. lsblk
+Output:
+The command listed the available block devices on the system.
+Observation:
+This shows the storage devices visible to the Linux environment and helps identify the disk layout.
+
+2. mount | head -n 20
+Output:
+The mounted filesystems on the container environment were displayed.
+Observation:
+This confirms the filesystems currently attached and accessible to the system.
+
+3. df -h
+Output:
+Disk usage statistics were shown in human-readable format.
+Observation:
+This provides a quick view of total size, used space, available space, and usage percentage for mounted filesystems.
+
+4. df -i
+Output:
+Inode utilization statistics were shown for the mounted filesystems.
+Observation:
+This indicates whether the system is running low on inode capacity, which can affect the creation of new files even when disk space remains available.
+
+Storage health observations:
+- The environment reported mounted filesystems and disk usage data successfully.
+- No immediate storage failure was observed from the collected output.
+- The system should be monitored for inode exhaustion if a large number of small files are created.
+
+Recommendations:
+- Remove unnecessary temporary files and logs regularly.
+- Archive older data to free disk space.
+- Monitor inode usage along with disk capacity during application deployment.
+
